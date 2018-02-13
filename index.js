@@ -29,6 +29,13 @@ app.delete('/pokemon/:id', function (req, res) {
 // This responds a GET request for the /users page.
 app.get('/users', function (req, res) {
    console.log("Got a GET request for /users");
-   res.send('Page Listing');
+   res.send('Liste des utilisateurs');
 })
+
+app.get('/users/:id', function (req, res) {
+   console.log("Got a POST request for the homepage");
+   res.send('Affiche l utilisateur n°' + req.params.id);
+})
+
+
 app.listen(3000, () => console.log('App is live on port 3000!'))
