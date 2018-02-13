@@ -1,5 +1,8 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
+const fetch = require ('node-fetch');
+const cheerio = require ('cheerio');
+const request = require ('request')
 
 app.get('/', (req, res) =>
   res.send("Bienvenue sur notre Pokenode")
@@ -8,7 +11,15 @@ app.get('/', (req, res) =>
 // This responds a POST request for the homepage
 app.get('/pokemons', function (req, res) {
    console.log("Got a POST request for the homepage");
-   res.send('Liste de tous les pokémons ');
+   let pokemon;
+   request("https://pokeapi.co/api/v2/pokemon/?limit=151", function(err, response, json){
+     pokedex = JSON.parse(json).results;
+     for(let i in pokedex){
+       pokemon += pokedex[i].name+"<br>";
+     }console.log(pokemon);
+     res.send('Liste de tous les pokémons \n'+pokemon);
+   });
+
 })
 
 // This responds a POST request for the homepage
