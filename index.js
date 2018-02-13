@@ -13,19 +13,33 @@ app.get('/', (req, res) =>
 
 app.get('/pokemons', function (req, res) {
   console.log("Got a POST request for the homepage");
+  let pokedex = [];
   fetch("http://www.pokemontrash.com/pokedex/liste-pokemon.php#gen1")
     .then(res => res.text())
     .then(html => cheerio.load(html))
     .then($ => {
-      $("table.pokedex tbody").each((index,element) => {
+      $("#pokedex-list table.pokedex:nth-child(14) tbody").each((index,element) => {
         $(element).children("tr").each((index,element2) =>{
-          let id = $(element2).children("td:first-child").text();
+          let type2 = "";
           let pokemon = $(element2).children("td");
+          let id = $(element2).children("td:first-child").text();
           let name = pokemon.children("strong").children("a.name").text();
           let image = pokemon.children("img").attr("src");
-          let type = pokemon.children("span").text();
-          console.log(id,name, image,type);
+          let type = pokemon.children("span.type1").text();
+
+          if(typeof(pokemon.children("span.type2").text()) != "undefined"){
+            type2 = pokemon.children("span.type2").text();
+          }
+
+          pokedex.push({
+            "id":id,
+            "name":name,
+            "image":image,
+            "type": type,
+            "type2": type2
+          })
         });
+        res.send(pokedex);
       });
     });
 })
