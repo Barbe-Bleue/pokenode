@@ -5,19 +5,20 @@ const fetch = require ('node-fetch');
 const cheerio = require ('cheerio');
 const request = require ('request');
 mongoose.connect("mongodb://localhost/test");
+
 app.get('/', (req, res) =>
   res.send("Bienvenue sur notre Pokenode")
 )
 
 app.get('/pokemons', function (req, res) {
    console.log("Got a POST request for the homepage");
-   let pokemon;
+   let pokemon = [];
    request("https://pokeapi.co/api/v2/pokemon/?limit=151", function(err, response, json){
      pokedex = JSON.parse(json).results;
      for(let i in pokedex){
-       pokemon += pokedex[i].name+"<br>";
+       pokemon.push ({name: pokedex[i].name});
      }console.log(pokemon);
-     res.send('Liste de tous les pokémons \n'+pokemon);
+     res.send(pokemon);
    });
 })
 
