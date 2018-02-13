@@ -24,7 +24,7 @@ app.get('/pokemons', function (req, res) {
           let pokemon = $(element2).children("td");
           let id = $(element2).children("td:first-child").text();
           let name = pokemon.children("strong").children("a.name").text();
-          let image = pokemon.children("img").attr("src");
+          let image = "http://www.pokemontrash.com/pokedex/"+pokemon.children("img").attr("src");
           let type = pokemon.children("span.type1").text();
 
           if(typeof(pokemon.children("span.type2").text()) != "undefined"){
