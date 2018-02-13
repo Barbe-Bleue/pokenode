@@ -4,6 +4,7 @@ const app = express();
 const fetch = require ('node-fetch');
 const cheerio = require ('cheerio');
 const request = require ('request');
+
 mongoose.connect("mongodb://localhost/test");
 
 app.get('/', (req, res) =>
@@ -11,20 +12,36 @@ app.get('/', (req, res) =>
 )
 
 app.get('/pokemons', function (req, res) {
-   console.log("Got a POST request for the homepage");
-   let pokemon = [];
-   request("https://pokeapi.co/api/v2/pokemon/?limit=151", function(err, response, json){
-     pokedex = JSON.parse(json).results;
-     for(let i in pokedex){
-       pokemon.push ({name: pokedex[i].name});
-     }console.log(pokemon);
-     res.send(pokemon);
-   });
+  console.log("Got a POST request for the homepage");
+  fetch("http://www.pokemontrash.com/pokedex/liste-pokemon.php#gen1")
+    .then(res => res.text())
+    .then(html => cheerio.load(html))
+    .then($ => {
+      $("table.pokedex tbody").each((index,element) => {
+        $(element).children("tr").each((index,element2) =>{
+          let id = $(element2).children("td:first-child").text();
+          let pokemon = $(element2).children("td");
+          let name = pokemon.children("strong").children("a.name").text();
+          let image = pokemon.children("img").attr("src");
+          let type = pokemon.children("span").text();
+          console.log(id,name, image,type);
+        });
+      });
+    });
 })
 
 app.get('/pokemons/:id', function (req, res) {
-   console.log("Got a POST request for the homepage");
-   res.send('Affiche le pokémon n°' + req.params.id);
+  console.log("Got a POST request for the homepage");
+  let pokedex = [];
+  request("https://pokeapi.co/api/v2/pokemon/"+req.params.id, function(err, response, json){
+    let pokemon = JSON.parse(json);
+    pokedex.push({
+      "id": pokemon.id,
+      "name": pokemon.name,
+      "type": pokemon.types[0].type.name
+    });
+    res.send(pokedex);
+  });
 })
 
 app.delete('/pokemon/:id', function (req, res) {
