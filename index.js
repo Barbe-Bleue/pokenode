@@ -24,7 +24,15 @@ app.get('/pokemons', function (req, res) {
           let pokemon = $(element2).children("td");
           let id = $(element2).children("td:first-child").text();
           let name = pokemon.children("strong").children("a.name").text();
-          let image = "http://www.pokemontrash.com/pokedex/"+pokemon.children("img").attr("src");
+          let thumbails = "http://www.pokemontrash.com/pokedex/"+pokemon.children("img").attr("src");
+          if(id <= 9){
+            idImage = parseInt("00"+id);
+          }else if (id >=10 && id <= 99 ) {
+            idImage = parseInt("0"+id);
+          }else{
+            idImage = id;
+          }
+          let image = "http://www.pokemontrash.com/pokedex/images/sugimori/"+idImage+".png";
           let type = pokemon.children("span.type1").text();
 
           if(typeof(pokemon.children("span.type2").text()) != "undefined"){
@@ -34,6 +42,7 @@ app.get('/pokemons', function (req, res) {
           pokedex.push({
             "id":id,
             "name":name,
+            "thumbails": thumbails,
             "image":image,
             "type": type,
             "type2": type2
