@@ -6,16 +6,25 @@ app.get('/', (req, res) =>
 )
 
 // This responds a POST request for the homepage
-app.post('/', function (req, res) {
+app.get('/pokemons', function (req, res) {
    console.log("Got a POST request for the homepage");
-   res.send('Hello POST');
+   res.send('Liste de tous les pokémons ');
+})
+
+// This responds a POST request for the homepage
+app.get('/pokemons/:id', function (req, res) {
+   console.log("Got a POST request for the homepage");
+   res.send('Affiche le pokémon n°' + req.params.id);
 })
 
 // This responds a DELETE request for the /del_user page.
-app.delete('/del_user', function (req, res) {
+app.delete('/pokemon/:id', function (req, res) {
    console.log("Got a DELETE request for /del_user");
    res.send('Hello DELETE');
 })
+
+
+// PARTIE USER
 
 // This responds a GET request for the /users page.
 app.get('/users', function (req, res) {
