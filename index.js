@@ -4,7 +4,8 @@ const app = express();
 const fetch = require ('node-fetch');
 const cheerio = require ('cheerio');
 const request = require ('request');
-const addZeroToId = require('./functions.js')
+const addZeroToId = require('./functions.js');
+const getEvolution = require('./evolution.js');
 
 mongoose.connect("mongodb://localhost/test");
 
