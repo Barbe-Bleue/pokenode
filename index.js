@@ -4,6 +4,7 @@ const app = express();
 const fetch = require ('node-fetch');
 const cheerio = require ('cheerio');
 const request = require ('request');
+const addZeroToId = require('./functions.js')
 
 mongoose.connect("mongodb://localhost/test");
 
@@ -14,7 +15,7 @@ app.get('/', (req, res) =>
 app.get('/pokemons', function (req, res) {
   console.log("Got a POST request for the homepage");
   let pokedex = [];
-  fetch("http://www.pokemontrash.com/pokedex/liste-pokemon.php#gen1")
+  fetch("http://www.pokemontrash.com/pokedex/liste-pokemon.php")
     .then(res => res.text())
     .then(html => cheerio.load(html))
     .then($ => {
@@ -25,13 +26,7 @@ app.get('/pokemons', function (req, res) {
           let id = $(element2).children("td:first-child").text();
           let name = pokemon.children("strong").children("a.name").text();
           let thumbails = "http://www.pokemontrash.com/pokedex/"+pokemon.children("img").attr("src");
-          if(id <= 9){
-            idImage = parseInt("00"+id);
-          }else if (id >=10 && id <= 99 ) {
-            idImage = parseInt("0"+id);
-          }else{
-            idImage = id;
-          }
+          let idImage = addZeroToId(id);
           let image = "http://www.pokemontrash.com/pokedex/images/sugimori/"+idImage+".png";
           let type = pokemon.children("span.type1").text();
 
