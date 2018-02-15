@@ -52,9 +52,7 @@ app.post('/pokemons', async function (req, res) {
 app.patch('/pokemons/:id', async function (req, res) {
   console.log("Got a PATCH request for /pokemons/"+req.params.id);
   const result = await pokequery.patchPokeById(req.params.id,req.body);
-  console.log(result);
   res.send(result);
-
 });
 
 

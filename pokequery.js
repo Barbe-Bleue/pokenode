@@ -37,6 +37,16 @@ module.exports.isPokeExist = async function(id) {
   return await Client.findOne()
   .where("id")
   .eq(id)
+
+  const isExist = await this.isPokeExist(idPoke).then(async function(result) {
+    // si le pokémon existe
+    if(result != null){
+      return true;
+    }else{
+      return false;
+    }
+  });
+  return isExist;
 }
 
 module.exports.deletePokeById = async function(id) {
@@ -48,7 +58,7 @@ module.exports.deletePokeById = async function(id) {
 module.exports.addPoke = async function(infoPoke){
   let c = new Client();
 
-  // Check si les champs  correspondent au Schema
+  // Check si les champs correspondent au Schema
   for(let key in infoPoke ){
     if(functionsjs.getObjectKeyIndex(clientSchema.obj, key)){
       c.key = infoPoke[key];
@@ -59,22 +69,28 @@ module.exports.addPoke = async function(infoPoke){
 }
 
 module.exports.patchPokeById = async function(idPoke,infoPoke){
-  const tryUpdate = await this.isPokeExist(idPoke).then(async function(result) {
-    if(result != null){
-      let  problemo = false;
-      for(let key in infoPoke ){
-        if(!functionsjs.getObjectKeyIndex(clientSchema.obj, key)){
-          problemo = true;
-          return "Un des champs n'est pas valide";
-        }
-      }
-      if(!problemo){
-        const update = Client.updateOne({ id: idPoke },{$set: infoPoke})
-          return "le pokemon n°"+idPoke+" a été modifié !";
-      }
-    }else{
-      return "Le pokémon n'existe pas !";
-    }
-  });
+  const tryUpdate = await this.isPokeExist(idPoke);
+  // si le pokémon existe
+  if(tryUpdate){
+    // check si les champs correspondent au Schema
+    let problemo = checkInfoPokeWithSchema(infoPoke);
+    if(!problemo){
+      // si tout est en ordre on update
+      const update = Client.updateOne({ id: idPoke },{$set: infoPoke})
+      return "le pokemon n°"+idPoke+" a été modifié !";
+    }else
+      return "Un des champs n'est pas valide";
+  }else
+    return "Le pokémon n'existe pas !";
   return tryUpdate;
+}
+
+function checkInfoPokeWithSchema(infoPoke){
+  for(let key in infoPoke ){
+    // check si les champs correspondent au Schema
+    if(!functionsjs.getObjectKeyIndex(clientSchema.obj, key)){
+      // un des champs ne correspond pas au Schema
+      return true;
+    }
+  } return false
 }
