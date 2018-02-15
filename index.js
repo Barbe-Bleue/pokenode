@@ -1,24 +1,17 @@
-const mongoose = require("mongoose");
+
 const express = require('express');
 const app = express();
 const fetch = require ('node-fetch');
 const cheerio = require ('cheerio');
 const request = require ('request');
 const path = require('path');
+const bodyParser =  require('body-parser');
+const functionsjs = require('./functions.js');
+const pokequery = require('./pokequery.js')
 
-mongoose.connect("mongodb://localhost/pokedex");
 
-const pokemonSchema = mongoose.Schema({
-  id: Number,
-  name: String,
-  thumbnails: String,
-  image: String,
-  type: String,
-  type2: String,
-  evolution: Array
-});
-
-const Client = mongoose.model("pokemon", pokemonSchema);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function (req, res){
   res.sendFile(path.join(__dirname+'/view/index.html'));
