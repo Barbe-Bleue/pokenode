@@ -1,0 +1,270 @@
+
+
+/*
+Author: Bootstrapthemes
+Author URI: http://bootstrapthemes.co
+*/
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+html,
+body {
+    background-color:#fafafa;
+    font-size: 16px;
+    color: #797979;
+    width: 100%;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    width:100%;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+
+
+
+.btn{
+    -webkit-transition: all 0.6s;
+    transition: all 0.6s;
+    font-size:14px;
+    font-weight: 600;
+    border:1px solid;
+    border-radius: 0px;
+    outline:0;
+}
+
+
+
+
+/*============================================
+        BS PRICING TABLE TWO
+==============================================*/
+
+.jumbotron{
+   background:url(images/xxx.jpg) no-repeat center center fixed;
+-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 800px;
+    display: block;
+}
+
+
+.jumbotron h1 {
+    margin-bottom: 40px;
+}
+.fiche-pkm{
+    background: rgba(138, 138, 138, 0.21);
+    padding-top: 90px !important;
+    padding-bottom: 30px !important;
+    border: 5px solid rgb(255, 255, 255) !important;
+    border-radius: 20px;
+    transition: all .25s ease-in-out;
+}
+
+.fiche-pkm2{
+    background: rgba(138, 138, 138, 0.21);
+    padding-top: 90px !important;
+    padding-bottom: 30px !important;
+    border: 5px solid rgb(255, 255, 255) !important;
+    border-radius: 20px;
+}
+
+
+#detective_pikachu{
+    text-align: center;
+    margin: auto;
+    height: 90px;
+    margin-right: 10px;
+}
+
+.fiche-pkm:hover {
+    background: rgba(138, 138, 138, 0.28);
+    transition: all .25s ease-in-out;
+    transform: scale(1.015);
+}
+
+.titre-pokedex{
+        background: #3653a5;
+    color: white;
+    font-weight: 600;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    height: 51px;
+    border-radius: 40px;
+}
+
+.ligne-pkm{
+    
+}
+.roomy-50{
+    padding:50px 0px;
+} 
+.p-top-100{
+    padding-top:100px;
+}
+
+.bs-pricing-table-two{
+width: 100%;
+    padding: 0px 0px;
+    font-family: 'Open Sans', sans-serif;
+}
+.bs-pricing-table-two > div {
+    padding: 0;
+    margin:0;
+}
+.bs-pricing-table-two .bs-icon {
+    top: -80px;
+    position: relative;
+}
+
+.bs-pricing-table-two .bs-icon img{
+    position: relative;
+    z-index: 2;
+}
+
+.bs-pricing-table-two .bs-icon:before{
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    width: 35%;
+    height: 50px;
+    margin: 0 auto;
+    background-color: rgb(202, 202, 202);
+    border-radius: 50%;
+    margin-left: -17.5%;
+    z-index: 1;
+    opacity: 0.6;
+}
+
+.bs-pricing-table-two .head{
+    margin-top: -70px;
+}
+.bs-pricing-table-two .price-title h2{
+    color:#8DA0B8;
+    font-weight: 400;
+}
+.bs-pricing-table-two .head .price h1 small,
+.bs-pricing-table-two .head .price h1{
+    color:#998EFA;
+    font-size:50px;
+    font-weight: 700;
+}
+.bs-pricing-table-two .head .price h1 small{
+    font-size:22px;
+}
+.bs-pricing-table-two .head .price h1 sup{
+    font-size: 30px;
+    top: -25px;
+    position: relative;
+}
+.bs-pricing-table-two .bs-pricing-item li{
+    color:#B8C3D2;
+    font-weight: 300;
+    line-height: 2.5rem;
+}
+.bs-pricing-table-two .bs-pricing-item ul{
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+.bs-pricing-table-two .bs-pricing-item li strong{
+    font-weight: 700;
+}
+.bs-pricing-table-two .bs-pricing-item{
+    border-right: 1px solid #ddd;
+}
+.bs-pricing-table-two .bs-pricing-item.last-border{
+    border-right: 0px solid;
+}
+.bs-pricing-table-two .btn-primary{
+    color: #fff;
+    background-color: #998EFA;
+    border:1px solid;
+    border-color: #998EFA;
+    padding: 0.4rem 3rem;
+    margin-top:20px;
+}
+.bs-pricing-table-two .btn-primary:hover{
+    background-color: #A9A0B8;
+    border-color: #A9A0B8;
+    color:#fff;
+}
+
+
+
+
+/*copyright
+==================*/
+.footer{
+    background-color: #333;
+}
+.copyright{
+    padding: 20px 10px;
+}
+.copyright p {
+    font-size:12px;
+    color:#fff;
+}
+.copyright p i {
+    padding: 0px 5px;
+    color: red;
+}
+.copyright p a {
+    padding: 0px 5px;
+    color: yellow;
+}
+
+
+
+
+/* Portrait tablets and small desktops */
+@media (max-width: 991px) {
+
+
+    .sm-m-top-50{
+        margin-top:50px;
+    }
+    .sm-m-top-140{
+        margin-top:140px;
+    }
+    .bs-pricing-table-two .bs-pricing-item.sm-last-border{
+        border-right: 0px solid;
+    }
+
+
+
+}
+
+
+
+
+
+/* Landscape phones and portrait tablets */
+@media  (max-width: 768px) {
+
+    .xs-m-top-50{
+        margin-top:50px;
+    }
+    .xs-m-top-40{
+        margin-top:40px;
+    }
+
+    .bs-pricing-table-two .bs-pricing-item{
+ 
+    }
+    .bs-pricing-table-two .bs-pricing-item.last-border{
+        border-bottom: 0px solid ;
+        padding-bottom:0px;
+    }
+    .bs-pricing-table-two .bs-pricing-item.xs-last-border{
+        border-right: 0px solid;
+    }
+
+
+}
