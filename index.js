@@ -56,12 +56,24 @@ app.delete('/pokemons/:id', function (req, res) {
     .exec((err,clients) =>res.send("pokémon n° "+req.params.id+" a été supprimé !"))
 })
 
+app.post('/pokemons', function(req, res){
+  console.log("Got a POST request for /pokemons")
+  let c = new Client();
+  for(let key in req.body ){
+    if( functionsjs.getObjectKeyIndex(pokemonSchema.obj, key)){
+      c.key = req.body[key];
+      console.log(c.key);
+    }
+  } //c.save();
+});
+
+
 // PARTIE USER
 
 app.get('/users', function (req, res) {
    console.log("Got a GET request for /users");
    res.send('Liste des utilisateurs');
-})
+});
 
 app.get('/users/:id', function (req, res) {
    console.log("Got a POST request for the homepage");
