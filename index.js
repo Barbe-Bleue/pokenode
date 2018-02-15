@@ -54,9 +54,13 @@ app.get('/view/pokemons', function (req, res) {
     res.send(html);
   });
 });
-app.delete('/pokemon/:id', function (req, res) {
-   console.log("Got a DELETE request for /del_user");
-   res.send('Hello DELETE');
+
+app.delete('/pokemons/:id', function (req, res) {
+   console.log("Got a DELETE request for /pokemons/"+req.params.id);
+   Client.remove()
+    .where("id")
+    .eq(req.params.id)
+    .exec((err,clients) =>res.send("pokémon n° "+req.params.id+" a été supprimé !"))
 })
 
 // PARTIE USER
