@@ -4,6 +4,7 @@ const app = express();
 const fetch = require ('node-fetch');
 const cheerio = require ('cheerio');
 const request = require ('request');
+const path = require('path');
 
 mongoose.connect("mongodb://localhost/pokedex");
 
@@ -19,9 +20,9 @@ const pokemonSchema = mongoose.Schema({
 
 const Client = mongoose.model("pokemon", pokemonSchema);
 
-app.get('/', (req, res) =>
-  res.send("Bienvenue sur notre Pokenode")
-)
+app.get('/', function (req, res){
+  res.sendFile(path.join(__dirname+'/index.html'));
+});
 
 app.get('/pokemons', function (req, res) {
   Client.find() // TOUS LES Clients
@@ -37,7 +38,18 @@ app.get('/pokemons/:id', function (req, res) {
     .eq(req.params.id)
     .exec((err, clients) => res.send(clients));
 })
-
+app.get('/liste', function (req, res) {
+  Client.find()
+    .where("id")
+    .gt(0)
+    .exec((err, clients) => {
+    let html ="<ul>";
+    for(let pokemon of clients){
+      html +="<li><a href=pokemons/"+pokemon.id+">"+pokemon.name+"</a>";
+    }html +="<ul>";
+    res.send(html);
+  });
+});
 app.delete('/pokemon/:id', function (req, res) {
    console.log("Got a DELETE request for /del_user");
    res.send('Hello DELETE');
