@@ -2,7 +2,7 @@ const fetch = require ('node-fetch');
 const cheerio = require ('cheerio');
 const addZeroToId = require('./functions.js');
 const getEvolution = require('./evolution.js');
-
+const mongoose = require("mongoose");
 
 function getPokemon(){
   let pokedex = [];
@@ -27,7 +27,7 @@ function getPokemon(){
       pokedex.push({
         "id":id,
         "name":name,
-        "thumbails": thumbails,
+        "thumbnails": thumbails,
         "image":image,
         "type": type,
         "type2": type2
@@ -41,7 +41,6 @@ module.exports = getPokemon;
 async function getEvols(pokedex){
   const liste = [];
   for(let pokemon of pokedex){
-    console.log(pokemon);
     const evolutions = await fetch("http://www.pokemontrash.com/pokedex/"+pokemon.id+"-"+pokemon.name+".html")
     .then(res => res.text())
     .then(html => cheerio.load(html))
@@ -71,6 +70,35 @@ async function getEvols(pokedex){
     };
     liste.push(newPoke);
   }
-  console.log(liste[0]);
+  mongoose.connect("mongodb://localhost/pokedex");
+
+  const clientSchema = mongoose.Schema({
+    id: Number,
+    name: String,
+    thumbnails: String,
+    image: String,
+    type: String,
+    type2: String,
+    evolution: Array
+  });
+
+  const Client = mongoose.model("pokemon", clientSchema);
+
+  // CREER UN DOCUMENT
+  for(let pok of liste){
+    let c = new Client({
+      id: pok.id,
+      name: pok.name,
+      thumbnails: pok.thumbnails,
+      image: pok.image,
+      type: pok.type,
+      type2: pok.type2,
+      evolution: pok.evolutions
+    });
+    // SAVE
+    c.save();
+    console.log(pok.name," ajouté !");
+  }
+
   return liste;
 }
