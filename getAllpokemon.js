@@ -1,6 +1,6 @@
 const fetch = require ('node-fetch');
 const cheerio = require ('cheerio');
-const addZeroToId = require('./functions.js');
+const functionsjs = require('./functions.js');
 const getEvolution = require('./evolution.js');
 const mongoose = require("mongoose");
 
@@ -17,7 +17,7 @@ function getPokemon(){
       let id = $(element).children("td:first-child").text();
       let name = pokemon.children("strong").children("a.name").text();
       let thumbails = "http://www.pokemontrash.com/pokedex/"+pokemon.children("img").attr("src");
-      let idImage = addZeroToId(id);
+      let idImage = functionsjs.addZeroToId(id);
       let image = "http://www.pokemontrash.com/pokedex/images/sugimori/"+idImage+".png";
       let type = pokemon.children("span.type1").text();
 
