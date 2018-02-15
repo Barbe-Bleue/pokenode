@@ -5,7 +5,19 @@ const fetch = require ('node-fetch');
 const cheerio = require ('cheerio');
 const request = require ('request');
 
-mongoose.connect("mongodb://localhost/test");
+mongoose.connect("mongodb://localhost/pokedex");
+
+const pokemonSchema = mongoose.Schema({
+  id: Number,
+  name: String,
+  thumbnails: String,
+  image: String,
+  type: String,
+  type2: String,
+  evolution: Array
+});
+
+const Client = mongoose.model("pokemon", pokemonSchema);
 
 app.get('/', (req, res) =>
   res.send("Bienvenue sur notre Pokenode")
@@ -16,7 +28,11 @@ app.get('/pokemons', function (req, res) {
 });
 
 app.get('/pokemons/:id', function (req, res) {
-  
+  console.log(req.params.id);
+  Client.find() // TOUS LES Clients
+    .where("id")
+    .eq(req.params.id)
+    .exec((err, clients) => res.send(clients));
 })
 
 app.delete('/pokemon/:id', function (req, res) {
