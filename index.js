@@ -21,10 +21,11 @@ const pokemonSchema = mongoose.Schema({
 const Client = mongoose.model("pokemon", pokemonSchema);
 
 app.get('/', function (req, res){
-  res.sendFile(path.join(__dirname+'/index.html'));
+  res.sendFile(path.join(__dirname+'/view/index.html'));
 });
 
 app.get('/pokemons', function (req, res) {
+  console.log("Got a GET request for /pokemons");
   Client.find() // TOUS LES Clients
     .where("id")
     .gt(0)
@@ -32,20 +33,22 @@ app.get('/pokemons', function (req, res) {
 });
 
 app.get('/pokemons/:id', function (req, res) {
-  console.log(req.params.id);
+  console.log("Got a GET request for /pokemons/"+req.params.id);
   Client.find() // TOUS LES Clients
     .where("id")
     .eq(req.params.id)
     .exec((err, clients) => res.send(clients));
-})
-app.get('/liste', function (req, res) {
+});
+
+app.get('/view/pokemons', function (req, res) {
+  console.log("Got a GET request for /view/pokemons/");
   Client.find()
     .where("id")
     .gt(0)
     .exec((err, clients) => {
     let html ="<ul>";
     for(let pokemon of clients){
-      html +="<li><a href=pokemons/"+pokemon.id+">"+pokemon.name+"</a>";
+      html +="<li><a href=/pokemons/"+pokemon.id+">"+pokemon.name+"</a>";
     }html +="<ul>";
     res.send(html);
   });
