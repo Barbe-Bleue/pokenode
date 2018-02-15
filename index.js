@@ -24,7 +24,10 @@ app.get('/', (req, res) =>
 )
 
 app.get('/pokemons', function (req, res) {
-  //res.send(getPokemon());
+  Client.find() // TOUS LES Clients
+    .where("id")
+    .gt(0)
+    .exec((err, clients) => res.send(clients));
 });
 
 app.get('/pokemons/:id', function (req, res) {
