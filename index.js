@@ -42,19 +42,14 @@ app.get('/view/pokemons', async function (req, res) {
 
 app.delete('/pokemons/:id', async function (req, res) {
    console.log("Got a DELETE request for /pokemons/"+req.params.id);
-   const result = await pokequery.deletePokeById(req.params.id)
+   const result = await pokequery.deletePokeById(req.params.id);
    if(result) res.send("pokémon n° "+req.params.id+" a été supprimé !");
 })
 
 app.post('/pokemons', async function (req, res){
   console.log("Got a POST request for /pokemons")
-  let c = new Client();
-  for(let key in req.body ){
-    if( functionsjs.getObjectKeyIndex(pokemonSchema.obj, key)){
-      c.key = req.body[key];
-      console.log(c.key);
-    }
-  } //c.save();
+  const result = await pokequery.addPoke(req.body);
+  if(result) res.send("le pokémon "+req.body.name+" a été ajouté !");
 });
 
 

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const functionsjs = require("./functions.js");
 mongoose.connect("mongodb://localhost/pokedex");
 
 const clientSchema = mongoose.Schema({
@@ -42,4 +43,15 @@ module.exports.deletePokeById = async function(id) {
   return await Client.remove()
   .where("id")
   .eq(id)
+}
+
+module.exports.addPoke = async function(infoPoke){
+  let c = new Client();
+  for(let key in infoPoke ){
+    if(functionsjs.getObjectKeyIndex(clientSchema.obj, key)){
+      c.key = infoPoke[key];
+      console.log(c.key);
+    }
+  } c.save();
+  if(c.save()) return true;
 }
