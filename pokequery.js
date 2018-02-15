@@ -34,7 +34,7 @@ module.exports.findPokeByName = async function(name) {
 }
 
 module.exports.isPokeExist = async function(id) {
-  return await Client.find()
+  return await Client.findOne()
   .where("id")
   .eq(id)
 }
@@ -58,12 +58,23 @@ module.exports.addPoke = async function(infoPoke){
   if(c.save()) return true;
 }
 
-module.exports.patchPokeById = async function(id,infoPoke){
-  return await Client.findByIdAndupdate(id, {
-        $set: {
-            subject: req.body.subject,
-            description: req.body.description,
-            currentStep: req.body.currentStep
+module.exports.patchPokeById = async function(idPoke,infoPoke){
+  const tryUpdate = await this.isPokeExist(idPoke).then(async function(result) {
+    if(result != null){
+      let  problemo = false;
+      for(let key in infoPoke ){
+        if(!functionsjs.getObjectKeyIndex(clientSchema.obj, key)){
+          problemo = true;
+          return "Un des champs n'est pas valide";
         }
-    }, callback);
+      }
+      if(!problemo){
+        const update = Client.updateOne({ id: idPoke },{$set: infoPoke})
+          return "le pokemon n°"+idPoke+" a été modifié !";
+      }
+    }else{
+      return "Le pokémon n'existe pas !";
+    }
+  });
+  return tryUpdate;
 }

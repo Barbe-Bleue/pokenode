@@ -49,11 +49,13 @@ app.post('/pokemons', async function (req, res) {
   if(result) res.send("le pokémon "+req.body.name+" a été ajouté !");
 });
 
-app.patch('/pokemons/:id', async function(req, res) {
+app.patch('/pokemons/:id', async function (req, res) {
   console.log("Got a PATCH request for /pokemons/"+req.params.id);
   const result = await pokequery.patchPokeById(req.params.id,req.body);
-  if(result) res.send("le pokemon n°"+req.params.id+"a été modifié !");
-}
+  console.log(result);
+  res.send(result);
+
+});
 
 
 // PARTIE USER
