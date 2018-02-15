@@ -47,6 +47,8 @@ module.exports.deletePokeById = async function(id) {
 
 module.exports.addPoke = async function(infoPoke){
   let c = new Client();
+
+  // Check si les champs  correspondent au Schema
   for(let key in infoPoke ){
     if(functionsjs.getObjectKeyIndex(clientSchema.obj, key)){
       c.key = infoPoke[key];
@@ -54,4 +56,14 @@ module.exports.addPoke = async function(infoPoke){
     }
   } c.save();
   if(c.save()) return true;
+}
+
+module.exports.patchPokeById = async function(id,infoPoke){
+  return await Client.findByIdAndupdate(id, {
+        $set: {
+            subject: req.body.subject,
+            description: req.body.description,
+            currentStep: req.body.currentStep
+        }
+    }, callback);
 }
