@@ -29,6 +29,7 @@ app.get('/pokemons', function (req, res) {
   Client.find() // TOUS LES Clients
     .where("id")
     .gt(0)
+    .sort("id") // triés par id croissants
     .exec((err, clients) => res.send(clients));
 });
 
