@@ -17,13 +17,10 @@ app.get('/', function (req, res){
   res.sendFile(path.join(__dirname+'/view/index.html'));
 });
 
-app.get('/pokemons', function (req, res) {
+app.get('/pokemons', async function  (req, res) {
   console.log("Got a GET request for /pokemons");
-  Client.find() // TOUS LES Clients
-    .where("id")
-    .gt(0)
-    .sort("id") // triés par id croissants
-    .exec((err, clients) => res.send(clients));
+  const pokemons = await pokequery.findAllPoke()
+  res.send(pokemons);
 });
 
 app.get('/pokemons/:id', function (req, res) {
