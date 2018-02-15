@@ -19,23 +19,20 @@ module.exports.findAllPoke = async function(){
   .gt(0)
   .sort("id") // triés par id croissants
 }
-module.exports.findPokeById = function(id) {
-  Client.find()
+module.exports.findPokeById = async function(id) {
+  return await Client.find()
   .where("id")
   .eq(id)
-  .exec((err, clients) => {return (clients)});
 }
 
-module.exports.findPokeByName = function(name) {
-  Client.find()
+module.exports.findPokeByName = async function(name) {
+  return await Client.find()
   .where("name")
   .eq(name)
-  .exec((err, clients) => {return (clients)});
 }
 
-module.exports.isPokeExist = function(id) {
-  Client.find()
+module.exports.isPokeExist = async function(id) {
+  return await Client.find()
   .where("id")
   .eq(id)
-  .exec((err, clients) => {return true});
 }
