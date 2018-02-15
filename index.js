@@ -9,7 +9,6 @@ const bodyParser =  require('body-parser');
 const functionsjs = require('./functions.js');
 const pokequery = require('./pokequery.js')
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -23,37 +22,31 @@ app.get('/pokemons', async function  (req, res) {
   res.send(pokemons);
 });
 
-app.get('/pokemons/:id', function (req, res) {
+app.get('/pokemons/:id', async function (req, res) {
   console.log("Got a GET request for /pokemons/"+req.params.id);
-  Client.find() // TOUS LES Clients
-    .where("id")
-    .eq(req.params.id)
-    .exec((err, clients) => res.send(clients));
+  const pokemon = await pokequery.findPokeById(req.params.id);
+  res.send(pokemon);
 });
 
-app.get('/view/pokemons', function (req, res) {
+app.get('/view/pokemons', async function (req, res) {
   console.log("Got a GET request for /view/pokemons/");
-  Client.find()
-    .where("id")
-    .gt(0)
-    .exec((err, clients) => {
-    let html ="<ul>";
-    for(let pokemon of clients){
-      html +="<li><a href=/pokemons/"+pokemon.id+">"+pokemon.name+"</a>";
-    }html +="<ul>";
-    res.send(html);
-  });
+  const pokemons = await pokequery.findAllPoke();
+  let html ="<ul>";
+
+  for(let poke of pokemons){
+    html +="<li><a href=/pokemons/"+poke.id+">"+poke.name+"</a>";
+  }html +="<ul>";
+
+  res.send(html);
 });
 
-app.delete('/pokemons/:id', function (req, res) {
+app.delete('/pokemons/:id', async function (req, res) {
    console.log("Got a DELETE request for /pokemons/"+req.params.id);
-   Client.remove()
-    .where("id")
-    .eq(req.params.id)
-    .exec((err,clients) =>res.send("pokémon n° "+req.params.id+" a été supprimé !"))
+   const result = await pokequery.deletePokeById(req.params.id)
+   if(result) res.send("pokémon n° "+req.params.id+" a été supprimé !");
 })
 
-app.post('/pokemons', function(req, res){
+app.post('/pokemons', async function (req, res){
   console.log("Got a POST request for /pokemons")
   let c = new Client();
   for(let key in req.body ){
@@ -67,7 +60,7 @@ app.post('/pokemons', function(req, res){
 
 // PARTIE USER
 
-app.get('/users', function (req, res) {
+app.get('/users', async function (req, res) {
    console.log("Got a GET request for /users");
    res.send('Liste des utilisateurs');
 });

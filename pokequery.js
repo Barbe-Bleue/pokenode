@@ -19,6 +19,7 @@ module.exports.findAllPoke = async function(){
   .gt(0)
   .sort("id") // triés par id croissants
 }
+
 module.exports.findPokeById = async function(id) {
   return await Client.find()
   .where("id")
@@ -33,6 +34,12 @@ module.exports.findPokeByName = async function(name) {
 
 module.exports.isPokeExist = async function(id) {
   return await Client.find()
+  .where("id")
+  .eq(id)
+}
+
+module.exports.deletePokeById = async function(id) {
+  return await Client.remove()
   .where("id")
   .eq(id)
 }
