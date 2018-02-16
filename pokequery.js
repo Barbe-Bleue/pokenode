@@ -55,7 +55,7 @@ module.exports.deletePokeById = async function(id) {
   // si le pokémon existe
   const del = await this.isPokeExist(id);
   if(del){
-    Client.remove()
+    await Client.remove()
     .where("id")
     .eq(id)
     return "Le pokémon n°"+id+" a été supprimé !"
@@ -87,7 +87,7 @@ module.exports.patchPokeById = async function(idPoke,infoPoke){
     let problemo = checkInfoPokeWithSchema(infoPoke);
     if(!problemo){
       // si tout est en ordre on update
-      Client.updateOne({ id: idPoke },{$set: infoPoke})
+      await Client.updateOne({ id: idPoke },{$set: infoPoke})
       return "le pokemon n°"+idPoke+" a été modifié !";
     }else
       return "Le champ "+problemo+" n'est pas valide !";
