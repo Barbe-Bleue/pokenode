@@ -1,4 +1,4 @@
-module.exports.renderHtml = function(pokemons){
+module.exports.renderHtml = function(pokemons,res){
   let html ="<style>.plante{background-color:#9bcc50;}";
 
   //html +="@import url('https://fonts.googleapis.com/css?family=Acme');";
@@ -44,5 +44,5 @@ module.exports.renderHtml = function(pokemons){
     html += "</td>"
     html +="</tr>"
   }html +="</table>";
-  return html;
+  res.send(html);
 }

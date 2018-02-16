@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const functionsjs = require("./functions.js");
+const bcrypt =  require("bcrypt-nodejs");
 mongoose.connect("mongodb://localhost/pokedex");
 
 const userSchema = mongoose.Schema({
@@ -11,20 +12,6 @@ const userSchema = mongoose.Schema({
 
 const Client = mongoose.model("users", userSchema);
 
-module.exports.findAllUser = async function(){
-  return await Client.find()
-  .sort("_id") // triés par id croissants
-}
-
-module.exports.findUserById = async function(id) {
-    const oneUser = await Client.findOne()
-      .where("_id")
-      .eq(id)
-    if(oneUser)
-      return oneUser;
-    else
-      return "Le user n'existe pas !";
-}
 module.exports.isUserExist = async function(email) {
   return await Client.findOne()
   .where("email")
@@ -41,20 +28,39 @@ module.exports.isUserExist = async function(email) {
   return isExist;
 }
 
-module.exports.addUser = async function(infoUser){
+module.exports.findUserById = async function(id,res) {
+  const oneUser = await Client.findOne()
+    .where("_id")
+    .eq(id)
+  if(oneUser)
+    res.json(oneUser);
+  else
+    res.status(404).json("Le user n'existe pas !");
+}
+
+module.exports.findAllUser = async function(res){
+  const allUser = await Client.find()
+    .sort("_id") // triés par id croissants
+  if(allUser)
+    res.json(allUser);
+  else
+    res.status(400).json("Aucun users !");
+}
+
+module.exports.addUser = async function(infoUser,res){
   // si le user existe
   const ajout = await this.isUserExist(infoUser.email);
   if(!ajout){
     // Check si les champs correspondent au Schema
     let problemo = checkInfoUserWithSchema(infoUser);
     if(!problemo){
+      infoUser.password = bcrypt.hashSync(infoUser.password, 10)
       new Client(infoUser).save();
-      return "Le user "+infoUser.name+" a été ajouté !";
+      res.json("Le user "+infoUser.name+" a été ajouté !");
     }else
-      return "Le champs "+problemo+" n'est pas valide !";
+      res.status(200).json("Le champs "+problemo+" n'est pas valide !");
   }else
-    return "Le user existe déjà !";
-  return ajout;
+    res.status(200).json("Le user existe déjà !");
 }
 
 function checkInfoUserWithSchema(infoUser){

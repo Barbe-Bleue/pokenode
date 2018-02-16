@@ -17,60 +17,51 @@ app.get('/', function (req, res){
 
 app.get('/pokemons', async function  (req, res) {
   console.log("Got a GET request for /pokemons");
-  const pokemons = await pokequery.findAllPoke()
-  res.send(pokemons);
+  pokequery.findAllPoke(res)
 });
 
 app.get('/pokemons/:id', async function (req, res) {
   console.log("Got a GET request for /pokemons/"+req.params.id);
-  const pokemon = await pokequery.findPokeById(req.params.id);
-  res.send(pokemon);
+  pokequery.findPokeById(req.params.id, res);
 });
 
 app.delete('/pokemons/:id', async function (req, res) {
    console.log("Got a DELETE request for /pokemons/"+req.params.id);
-   const result = await pokequery.deletePokeById(req.params.id);
-   res.send(result);
+  pokequery.deletePokeById(req.params.id, res);
 })
 
 app.post('/pokemons', async function (req, res) {
   console.log("Got a POST request for /pokemons")
-  const result = await pokequery.addPoke(req.body);
-  res.send(result);
+  pokequery.addPoke(req.body, res);
 });
 
 app.patch('/pokemons/:id', async function (req, res) {
   console.log("Got a PATCH request for /pokemons/"+req.params.id);
-  const result = await pokequery.patchPokeById(req.params.id,req.body);
-  res.send(result);
+  pokequery.patchPokeById(req.params.id,req.body, res);
 });
 
 // Vue en tableau
 app.get('/view/pokemons', async function (req, res) {
   console.log("Got a GET request for /view/pokemons/");
-  const pokemons = await pokequery.findAllPoke();
-  html = render.renderHtml(pokemons);
-  res.send(html);
+  const pokemons = await pokequery.findAllPoke(res);
+  render.renderHtml(pokemons,res);
 });
 
 // PARTIE USER
 
 app.get('/users', async function (req, res) {
-   console.log("Got a GET request for /users");
-   const users = await userquery.findAllUser()
-   res.send(users);
+  console.log("Got a GET request for /users");
+  userquery.findAllUser(res)
 });
 
 app.get('/users/:id', async function (req, res) {
-   console.log("Got a POST request for the /user/"+req.params.id);
-   const user = await userquery.findUserById(req.params.id);
-   res.send(user);
+  console.log("Got a POST request for the /user/"+req.params.id);
+  userquery.findUserById(req.params.id,res);
 })
 
 app.post('/users', async function (req, res) {
-   console.log("Got a POST request for /users");
-   const result = await userquery.addUser(req.body);
-   res.send(result);
+  console.log("Got a POST request for /users");
+  userquery.addUser(req.body,res);
 })
 
 app.listen(3000, () => console.log('App is live on port 3000!'))
