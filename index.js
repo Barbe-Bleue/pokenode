@@ -40,13 +40,13 @@ app.get('/view/pokemons', async function (req, res) {
 app.delete('/pokemons/:id', async function (req, res) {
    console.log("Got a DELETE request for /pokemons/"+req.params.id);
    const result = await pokequery.deletePokeById(req.params.id);
-   if(result) res.send("le pokémon n°"+req.params.id+" a été supprimé !");
+   res.send(result);
 })
 
 app.post('/pokemons', async function (req, res) {
   console.log("Got a POST request for /pokemons")
   const result = await pokequery.addPoke(req.body);
-  if(result) res.send("le pokémon "+req.body.name+" a été ajouté !");
+  res.send(result);
 });
 
 app.patch('/pokemons/:id', async function (req, res) {
