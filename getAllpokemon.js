@@ -1,7 +1,6 @@
 const fetch = require ('node-fetch');
 const cheerio = require ('cheerio');
 const functionsjs = require('./functions.js');
-const getEvolution = require('./evolution.js');
 const mongoose = require("mongoose");
 
 function getPokemon(){
