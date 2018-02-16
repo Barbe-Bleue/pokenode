@@ -16,19 +16,16 @@ const Client = mongoose.model("pokemon", clientSchema);
 
 module.exports.findAllPoke = async function(){
   return await Client.find()
-  .where("id")
-  .gt(0)
-  .sort("id") // triés par id croissants
+  .sort("_id") // triés par id croissants
 }
 
 module.exports.findPokeById = async function(id) {
-  const findOne = await this.isPokeExist(id);
-  if(findOne){
-    const onePoke = await Client.find()
+  const onePoke = await Client.find()
     .where("id")
     .eq(id)
+  if(onePoke)
     return onePoke;
-  }else
+  else
     return "Le pokémon n'existe pas !";
 }
 
@@ -43,7 +40,7 @@ module.exports.isPokeExist = async function(id) {
   .where("id")
   .eq(id)
 
-  const isExist = await this.isPokeExist(idPoke).then(async function(result) {
+  const isExist = await this.isPokeExist(id).then(async function(result) {
     // si le pokémon existe
     if(result != null){
       return true;
@@ -61,23 +58,19 @@ module.exports.deletePokeById = async function(id) {
     Client.remove()
     .where("id")
     .eq(id)
-    return "Le pokémon n°"+infoPoke.id+" a été supprimé !"
+    return "Le pokémon n°"+id+" a été supprimé !"
   }else
     return "Le pokémon n'existe pas !";
 }
 
 module.exports.addPoke = async function(infoPoke){
-  let c = new Client();
-
   // si le pokémon existe
   const ajout = await this.isPokeExist(infoPoke.id);
   if(!ajout){
     // Check si les champs correspondent au Schema
     let problemo = checkInfoPokeWithSchema(infoPoke);
     if(!problemo){
-      for(let key in infoPoke ){
-        c.key = infoPoke[key];
-      } c.save();
+      new Client(infoPoke).save();
       return "le pokémon "+infoPoke.name+" a été ajouté !";
     }else
       return "Le champs "+problemo+" n'est pas valide !";
