@@ -3,7 +3,10 @@ module.exports.renderHtml = function(pokemons){
 
   //html +="@import url('https://fonts.googleapis.com/css?family=Acme');";
   //html +="body{font-family: 'Acme', sans-serif;";
-  //html +="body{background-color:#222:color:white}";
+  //html +="body{background:url('http://www.gamesreviews.com/wp-content/uploads/2016/07/PokemonGo.jpg') no-repeat center center fixed;background-size: cover;color:white;}";
+  html +="a:link{color:#12375e;text-decoration: none;}";
+  html +="a:hover{color:#0c243e;text-decoration: underline;}";
+  html +="a:active{color:#1e5692;}";
   html +="td{font-size:x-large;}";
   html +=".feu{background-color: #fd7d24;color:white}";
   html +=".eau{background-color: #4592c4;color:white}";
@@ -22,17 +25,17 @@ module.exports.renderHtml = function(pokemons){
   html +=".dragon{background:linear-gradient(180deg, #53a4cf 50%, #f16e57 50%);color:white;}";
   html +=".acier{background-color:#9eb7b8;}"
   html +="</style>"
-  html +="<table border=5 width=100%>";
+  html +="<table width=100%>";
   html +="<th>N°</th><th>Nom</th><th>Type</th><th>Type2</th><th>Icone</th><th colspan=6>Evolutions</th>"
   for(let poke of pokemons){
-    html +="<tr><td>"+poke.id+"</td>";
+    html +="<tr class="+poke.type+"><td>"+poke.id+"</td>";
     html +="<td align=center><a href=/pokemons/"+poke.id+"><b>"+poke.name+"</a></td>";
     html +="<td align=center class="+poke.type+">"+poke.type+"</td>";
     html +="<td align=center class="+poke.type2+">"+poke.type2+"</td>";
-    html +="<td align=center id=picture ><a href="+poke.image+"><img src="+poke.thumbnails+" width=100%></a></td>";
+    html +="<td align=center><a href="+poke.image+"><img src="+poke.thumbnails+" width=100%></a></td>";
     html +"<td>";
     for(evol of poke.evolution){
-      html +="<td>"+evol.evolutionName+"</td><td> "+evol.evolutionLvl+"</td>";
+      html +="<td align=center>"+evol.evolutionName+"</td><td> "+evol.evolutionLvl+"</td>";
     }
     html += "</td>"
     html +="</tr>"
