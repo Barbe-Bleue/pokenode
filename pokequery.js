@@ -69,14 +69,21 @@ module.exports.deletePokeById = async function(id) {
 module.exports.addPoke = async function(infoPoke){
   let c = new Client();
 
-  // Check si les champs correspondent au Schema
-  for(let key in infoPoke ){
-    if(functionsjs.getObjectKeyIndex(clientSchema.obj, key)){
-      c.key = infoPoke[key];
-      console.log(c.key);
-    }
-  } c.save();
-  if(c.save()) return true;
+  // si le pokémon existe
+  const ajout = await this.isPokeExist(infoPoke.id);
+  if(!ajout){
+    // Check si les champs correspondent au Schema
+    let problemo = checkInfoPokeWithSchema(infoPoke);
+    if(!problemo){
+      for(let key in infoPoke ){
+        c.key = infoPoke[key];
+      } c.save();
+      return "le pokémon "+infoPoke.name+" a été ajouté !";
+    }else
+      return "Le champs "+problemo+" n'est pas valide !";
+  }else
+    return "Le pokémon existe déjà !";
+  return ajout;
 }
 
 module.exports.patchPokeById = async function(idPoke,infoPoke){
