@@ -96,7 +96,6 @@ async function getEvols(pokedex){
     });
     // SAVE
     c.save();
-    console.log(pok.name," ajouté !");
   }
 
   return liste;
