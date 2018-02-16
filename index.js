@@ -48,7 +48,6 @@ app.get('/view/pokemons', async function (req, res) {
 });
 
 // PARTIE USER
-
 app.get('/users', async function (req, res) {
   console.log("Got a GET request for /users");
   userquery.findAllUser(res)
@@ -57,15 +56,16 @@ app.get('/users', async function (req, res) {
 app.get('/users/:id', async function (req, res) {
   console.log("Got a POST request for the /user/"+req.params.id);
   userquery.findUserById(req.params.id,res);
-})
+});
 
 app.post('/users', async function (req, res) {
   console.log("Got a POST request for /users");
   userquery.addUser(req.body,res);
-})
+});
 
 app.post('/login', async function (req, res) {
   console.log("Got a POST request for /login");
   userquery.login(req.body,res);
-})
+});
+
 app.listen(3000, () => console.log('App is live on port 3000!'))
