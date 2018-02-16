@@ -5,6 +5,7 @@ const cheerio = require ('cheerio');
 const path = require('path');
 const bodyParser =  require('body-parser');
 const pokequery = require('./pokequery.js')
+const userquery = require('./userquery.js')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,18 +26,6 @@ app.get('/pokemons/:id', async function (req, res) {
   res.send(pokemon);
 });
 
-app.get('/view/pokemons', async function (req, res) {
-  console.log("Got a GET request for /view/pokemons/");
-  const pokemons = await pokequery.findAllPoke();
-  let html ="<ul>";
-
-  for(let poke of pokemons){
-    html +="<li><a href=/pokemons/"+poke.id+">"+poke.name+"</a>";
-  }html +="<ul>";
-
-  res.send(html);
-});
-
 app.delete('/pokemons/:id', async function (req, res) {
    console.log("Got a DELETE request for /pokemons/"+req.params.id);
    const result = await pokequery.deletePokeById(req.params.id);
@@ -55,17 +44,37 @@ app.patch('/pokemons/:id', async function (req, res) {
   res.send(result);
 });
 
+// Vue en tableau
+app.get('/view/pokemons', async function (req, res) {
+  console.log("Got a GET request for /view/pokemons/");
+  const pokemons = await pokequery.findAllPoke();
+  let html ="<ul>";
+
+  for(let poke of pokemons){
+    html +="<li><a href=/pokemons/"+poke.id+">"+poke.name+"</a>";
+  }html +="<ul>";
+
+  res.send(html);
+});
 
 // PARTIE USER
 
 app.get('/users', async function (req, res) {
    console.log("Got a GET request for /users");
-   res.send('Liste des utilisateurs');
+   const users = await userquery.findAllUser()
+   res.send(users);
 });
 
-app.get('/users/:id', function (req, res) {
-   console.log("Got a POST request for the homepage");
-   res.send('Affiche l utilisateur n°' + req.params.id);
+app.get('/users/:id', async function (req, res) {
+   console.log("Got a POST request for the /user/"+req.params.id);
+   const user = await userquery.findUserById(req.params.id);
+   res.send(user);
+})
+
+app.post('/users', async function (req, res) {
+   console.log("Got a POST request for /users");
+   const result = await userquery.addUser(req.body);
+   res.send(result);
 })
 
 app.listen(3000, () => console.log('App is live on port 3000!'))
