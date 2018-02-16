@@ -64,4 +64,8 @@ app.post('/users', async function (req, res) {
   userquery.addUser(req.body,res);
 })
 
+app.post('/login', async function (req, res) {
+  console.log("Got a POST request for /login");
+  userquery.login(req.body,res);
+})
 app.listen(3000, () => console.log('App is live on port 3000!'))
