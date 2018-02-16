@@ -55,9 +55,15 @@ module.exports.isPokeExist = async function(id) {
 }
 
 module.exports.deletePokeById = async function(id) {
-  return await Client.remove()
-  .where("id")
-  .eq(id)
+  // si le pokémon existe
+  const del = await this.isPokeExist(id);
+  if(del){
+    Client.remove()
+    .where("id")
+    .eq(id)
+    return "Le pokémon n°"+infoPoke.id+" a été supprimé !"
+  }else
+    return "Le pokémon n'existe pas !";
 }
 
 module.exports.addPoke = async function(infoPoke){
@@ -95,7 +101,7 @@ function checkInfoPokeWithSchema(infoPoke){
     // check si les champs correspondent au Schema
     if(!functionsjs.getObjectKeyIndex(clientSchema.obj, key)){
       // un des champs ne correspond pas au Schema
-      return true;
+      return key;
     }
   } return false
 }
