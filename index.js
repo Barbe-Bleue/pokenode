@@ -4,8 +4,8 @@ const app = express();
 const cheerio = require ('cheerio');
 const path = require('path');
 const bodyParser =  require('body-parser');
-const pokequery = require('./pokequery.js')
-const userquery = require('./userquery.js')
+const pokequery = require('./query/pokequery.js')
+const userquery = require('./query/userquery.js')
 const render = require('./view/render.js');
 
 app.use(bodyParser.json());
