@@ -26,16 +26,20 @@ module.exports.renderHtml = function(pokemons){
   html +=".acier{background-color:#9eb7b8;}"
   html +="</style>"
   html +="<table width=100%>";
-  html +="<th>N°</th><th>Nom</th><th>Type</th><th>Type2</th><th>Icone</th><th colspan=6>Evolutions</th>"
+  html +="<th>N°</th><th>Nom</th><th>Type</th><th>Type2</th>";
+  html +="<th>Icone</th><th colspan=6>Evolutions</th>";
   for(let poke of pokemons){
     html +="<tr class="+poke.type+"><td>"+poke.id+"</td>";
-    html +="<td align=center><a href=/pokemons/"+poke.id+"><b>"+poke.name+"</a></td>";
+    html +="<td align=center><a href=/pokemons/"+poke.id+">";
+    html +="<b>"+poke.name+"</a></td>";
     html +="<td align=center class="+poke.type+">"+poke.type+"</td>";
     html +="<td align=center class="+poke.type2+">"+poke.type2+"</td>";
-    html +="<td align=center><a href="+poke.image+"><img src="+poke.thumbnails+" width=100%></a></td>";
+    html +="<td align=center><a href="+poke.image+">";
+    html +="<img src="+poke.thumbnails+" width=100%></a></td>";
     html +"<td>";
     for(evol of poke.evolution){
-      html +="<td align=center>"+evol.evolutionName+"</td><td> "+evol.evolutionLvl+"</td>";
+      html +="<td align=center>"+evol.evolutionName+"</td>";
+      html +="<td align=center> "+evol.evolutionLvl+"</td>";
     }
     html += "</td>"
     html +="</tr>"
