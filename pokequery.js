@@ -22,9 +22,14 @@ module.exports.findAllPoke = async function(){
 }
 
 module.exports.findPokeById = async function(id) {
-  return await Client.find()
-  .where("id")
-  .eq(id)
+  const findOne = await this.isPokeExist(id);
+  if(findOne){
+    const onePoke = await Client.find()
+    .where("id")
+    .eq(id)
+    return onePoke;
+  }else
+    return "Le pokémon n'existe pas !";
 }
 
 module.exports.findPokeByName = async function(name) {
