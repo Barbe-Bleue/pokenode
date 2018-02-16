@@ -87,20 +87,20 @@ module.exports.addPoke = async function(infoPoke){
 }
 
 module.exports.patchPokeById = async function(idPoke,infoPoke){
-  const tryUpdate = await this.isPokeExist(idPoke);
+  const update = await this.isPokeExist(idPoke);
   // si le pokémon existe
-  if(tryUpdate){
+  if(update){
     // check si les champs correspondent au Schema
     let problemo = checkInfoPokeWithSchema(infoPoke);
     if(!problemo){
       // si tout est en ordre on update
-      const update = Client.updateOne({ id: idPoke },{$set: infoPoke})
+      Client.updateOne({ id: idPoke },{$set: infoPoke})
       return "le pokemon n°"+idPoke+" a été modifié !";
     }else
-      return "Un des champs n'est pas valide";
+      return "Le champ "+problemo+" n'est pas valide !";
   }else
     return "Le pokémon n'existe pas !";
-  return tryUpdate;
+  return update;
 }
 
 function checkInfoPokeWithSchema(infoPoke){
