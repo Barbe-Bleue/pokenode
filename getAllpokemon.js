@@ -78,7 +78,7 @@ async function getEvols(pokedex){
     image: String,
     type: String,
     type2: String,
-    evolution: Array
+    evolution: Array,
   });
 
   const Client = mongoose.model("pokemon", clientSchema);
@@ -92,7 +92,7 @@ async function getEvols(pokedex){
       image: pok.image,
       type: pok.type,
       type2: pok.type2,
-      evolution: pok.evolutions
+      evolution: pok.evolutions,
     });
     // SAVE
     c.save();
@@ -101,3 +101,4 @@ async function getEvols(pokedex){
 
   return liste;
 }
+getPokemon();
