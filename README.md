@@ -1,7 +1,8 @@
 # pokenode
 
+## install
+  
   npm install
-
   npm start
 
 ### Récupérer les pokemons dans une base MongoDB
