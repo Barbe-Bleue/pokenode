@@ -1,9 +1,13 @@
 # pokenode
 
+## install
+
   npm install
 
+## Récupérer les pokemons dans une base MongoDB
+
+  node ./scripts/getAllpokemon.js
+
+## run
+
   npm start
-
-### Récupérer les pokemons dans une base MongoDB
-
-  node ./scripts/getAllpokemons.js
